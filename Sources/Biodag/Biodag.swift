@@ -18,22 +18,22 @@ final public class DependencyResolver {
     /// Stored object instance factories.
     private var modules = [String: Module]()
     private var instances = [String: Any]()
-    
+
     /// Construct dependency resolutions.
     public init(@ModuleBuilder _ modules: () -> [Module]) {
         modules().forEach { add(module: $0) }
     }
-    
+
     /// Construct dependency resolution.
     public init(@ModuleBuilder _ module: () -> Module) {
         add(module: module())
     }
-    
+
     /// Assigns the current container to the composition root.
     public func build() {
         Self.root = self
     }
-    
+
     fileprivate init() {}
     deinit { modules.removeAll() }
 }
@@ -41,7 +41,7 @@ final public class DependencyResolver {
 private extension DependencyResolver {
     /// Composition root container of dependencies.
     static var root = DependencyResolver()
-    
+
     /// Registers a specific type and its instantiating factory.
     func add(module: Module) {
         modules[module.name] = module
@@ -90,7 +90,7 @@ private extension DependencyResolver {
 // MARK: Public API
 
 public extension DependencyResolver {
-    
+
     /// DSL for declaring modules within the container dependency initializer.
     @_functionBuilder struct ModuleBuilder {
         public static func buildBlock(_ modules: Module...) -> [Module] { modules }
@@ -103,7 +103,7 @@ public struct Module {
     fileprivate let name: String
     fileprivate let resolve: () -> Any
     fileprivate let scope: InjectionScope
-    
+
     public init<T>(_ name: String? = nil, scope: InjectionScope = .prototype, _ resolve: @escaping () -> T) {
         self.name = name ?? String(describing: T.self)
         self.resolve = resolve
@@ -118,15 +118,15 @@ public struct Inject<Value> {
     private let resolutionClosure = memoize(fn: { name -> Value in
         return DependencyResolver.root.resolve(for: name)
     })
-    
+
     public var wrappedValue: Value {
         return self.resolutionClosure(self.name)
     }
-    
+
     public init() {
         self.name = nil
     }
-    
+
     public init(_ name: String) {
         self.name = name
     }
