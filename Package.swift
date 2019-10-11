@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Shank",
+    name: "Biodag",
     platforms: [
         .macOS(.v10_12),
         .iOS(.v10),
@@ -13,17 +13,17 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Shank",
-            targets: ["Shank"]
+            name: "Biodag",
+            targets: ["Biodag"]
         )
     ],
     targets: [
         .target(
-            name: "Shank"
+            name: "Biodag"
         ),
         .testTarget(
-            name: "ShankTests",
-            dependencies: ["Shank"]
+            name: "BiodagTests",
+            dependencies: ["Biodag"]
         )
     ]
 )

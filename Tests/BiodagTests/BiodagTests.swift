@@ -1,9 +1,9 @@
 import XCTest
-import Shank
+import Biodag
 
 final class DependencyTests: XCTestCase {
     
-    private static let dependencies = Dependencies {
+    private static let dependencies = DependencyResolver {
         Module { WidgetModule() as WidgetModuleType }
         Module { SampleModule() as SampleModuleType }
         Module("abc") { SampleModule(value: "123") as SampleModuleType }

@@ -1,5 +1,5 @@
 //
-//  Shank
+//  Biodag
 //  A Swift micro-library that provides lightweight dependency injection.
 //
 //  Inspired by:
@@ -14,7 +14,7 @@
 import Foundation
 
 /// A dependency collection that provides resolutions for object instances.
-open class Dependencies {
+final public class DependencyResolver {
     /// Stored object instance factories.
     private var modules = [String: Module]()
     private var instances = [String: Any]()
@@ -30,7 +30,7 @@ open class Dependencies {
     }
     
     /// Assigns the current container to the composition root.
-    open func build() {
+    public func build() {
         Self.root = self
     }
     
@@ -38,9 +38,9 @@ open class Dependencies {
     deinit { modules.removeAll() }
 }
 
-private extension Dependencies {
+private extension DependencyResolver {
     /// Composition root container of dependencies.
-    static var root = Dependencies()
+    static var root = DependencyResolver()
     
     /// Registers a specific type and its instantiating factory.
     func add(module: Module) {
@@ -89,7 +89,7 @@ private extension Dependencies {
 
 // MARK: Public API
 
-public extension Dependencies {
+public extension DependencyResolver {
     
     /// DSL for declaring modules within the container dependency initializer.
     @_functionBuilder struct ModuleBuilder {
@@ -116,7 +116,7 @@ public struct Module {
 public struct Inject<Value> {
     private let name: String?
     private let resolutionClosure = memoize(fn: { name -> Value in
-        return Dependencies.root.resolve(for: name)
+        return DependencyResolver.root.resolve(for: name)
     })
     
     public var wrappedValue: Value {
