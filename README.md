@@ -1,5 +1,7 @@
 # Biodag
 
+Biodag: [pit̪akˈ] - dirk in Scottish Gaelic, a long thrusting dagger.
+
 A Swift micro-library that provides lightweight dependency injection, heavily influenced by [Shank](https://github.com/ZamzamInc/Shank)
 
 Inject dependencies via property wrappers:
