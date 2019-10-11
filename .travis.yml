@@ -11,4 +11,4 @@ before_install:
 language:
   - swift
 script:
-  - swift test
+  - swift test --parallel
