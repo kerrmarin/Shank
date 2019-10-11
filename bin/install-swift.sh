@@ -4,6 +4,7 @@ SWIFT_VERSION="5.1"
 UBUNTU_VERSION_SHORT="1804"
 UBUNTU_VERSION="18.04"
 
+swift --version
 sudo apt-get update
 sudo apt-get install libcurl3 libpython2.7 libpython2.7-dev
 
