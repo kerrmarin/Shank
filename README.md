@@ -1,6 +1,6 @@
 # Biodag
 
-Biodag: [pit̪akˈ] - dirk in Scottish Gaelic, a long thrusting dagger.
+Biodag: [pit̪akˈ] - [dirk](https://en.wikipedia.org/wiki/Dirk) in Scottish Gaelic, a long thrusting dagger.
 
 A Swift micro-library that provides lightweight dependency injection, heavily influenced by [Shank](https://github.com/ZamzamInc/Shank)
 
