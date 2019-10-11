@@ -5,10 +5,12 @@ matrix:
     - os: osx
       osx_image: xcode11.2
 
-before_install:
-  - echo "$TRAVIS_OS_NAME"
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then bin/install-swift.sh; fi
+# before_install:
+#   - echo "$TRAVIS_OS_NAME"
+#   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then bin/install-swift.sh; fi
 
+env:
+  - SWIFT_VERSION=5.1-RELEASE
 language:
   - swift
 script:
