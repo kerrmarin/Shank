@@ -23,7 +23,10 @@ Register modules early in your app:
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let dependencies = Dependencies {
+        // A prototype dependency (i.e. one per @Inject)
         Module { WidgetModule() as WidgetModuleType }
+        // A dependency that's scoped to be a singleton
+        Module(scope: .singleton) { SingletonModule() as SingletonModuleType }
     }
     
     override init() {
