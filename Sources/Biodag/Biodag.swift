@@ -115,9 +115,9 @@ public struct Module {
 @propertyWrapper
 public struct Inject<Value> {
     private let name: String?
-    private let resolutionClosure = memoize(fn: { name -> Value in
+    private let resolutionClosure = memoize { name -> Value in
         return DependencyResolver.root.resolve(for: name)
-    })
+    }
 
     public var wrappedValue: Value {
         return self.resolutionClosure(self.name)
