@@ -1,26 +1,28 @@
 import XCTest
 import Biodag
 
+//swiftlint:disable identifier_name force_cast
+
 final class DependencyTests: XCTestCase {
-    
+
     private static let dependencies = DependencyResolver {
         Module { WidgetModule() as WidgetModuleType }
         Module { SampleModule() as SampleModuleType }
         Module("abc") { SampleModule(value: "123") as SampleModuleType }
         Module("singleton", scope: .singleton) { SampleModule(value: "singleton") as SampleModuleType }
     }
-    
+
     @Inject private var widgetModule: WidgetModuleType
     @Inject private var sampleModule: SampleModuleType
     @Inject("abc") private var sampleModule2: SampleModuleType
     @Inject("singleton") private var singletonModule: SampleModuleType
-    
+
     private lazy var widgetWorker: WidgetWorkerType = widgetModule.component()
     private lazy var someObject: SomeObjectType = sampleModule.component()
     private lazy var anotherObject: AnotherObjectType = sampleModule.component()
     private lazy var viewModelObject: ViewModelObjectType = sampleModule.component()
     private lazy var viewControllerObject: ViewControllerObjectType = sampleModule.component()
-    
+
     override class func setUp() {
         super.setUp()
         dependencies.build()
@@ -35,7 +37,7 @@ final class DependencyScopeHelper {
 // MARK: - Test Cases
 
 extension DependencyTests {
-    
+
     func testResolver() {
         // Given
         let widgetModuleResult = widgetModule.test()
@@ -48,7 +50,7 @@ extension DependencyTests {
         let viewModelNestedResult = viewModelObject.testLmnNested()
         let viewControllerResult = viewControllerObject.testRst()
         let viewControllerNestedResult = viewControllerObject.testRstNested()
-        
+
         // Then
         XCTAssertEqual(widgetModuleResult, "WidgetModule.test()")
         XCTAssertEqual(sampleModuleResult, "SampleModule.test()")
@@ -59,7 +61,8 @@ extension DependencyTests {
         XCTAssertEqual(viewModelResult, "SomeViewModel.testLmn|SomeObject.testAbc")
         XCTAssertEqual(viewModelNestedResult, "SomeViewModel.testLmnNested|AnotherObject.testXyz|SomeObject.testAbc")
         XCTAssertEqual(viewControllerResult, "SomeViewController.testRst|SomeObject.testAbc")
-        XCTAssertEqual(viewControllerNestedResult, "SomeViewController.testRstNested|AnotherObject.testXyz|SomeObject.testAbc")
+        XCTAssertEqual(viewControllerNestedResult,
+                       "SomeViewController.testRstNested|AnotherObject.testXyz|SomeObject.testAbc")
     }
 
     func testSameInstanceAskedTwice() {
@@ -86,26 +89,26 @@ extension DependencyTests {
 extension DependencyTests {
 
     final class WidgetModule: WidgetModuleType {
-        
+
         func component() -> WidgetWorkerType {
             WidgetWorker(
                 store: component(),
                 remote: component()
             )
         }
-        
+
         func component() -> WidgetRemote {
             WidgetNetworkRemote(httpService: component())
         }
-        
+
         func component() -> WidgetStore {
             WidgetRealmStore()
         }
-        
+
         func component() -> HTTPServiceType {
             HTTPService()
         }
-        
+
         func test() -> String {
             "WidgetModule.test()"
         }
@@ -113,30 +116,30 @@ extension DependencyTests {
 
     final class SampleModule: SampleModuleType {
         let value: String?
-        
+
         init(value: String? = nil) {
             self.value = value
         }
-        
+
         func component() -> SomeObjectType {
             SomeObject()
         }
-        
+
         func component() -> AnotherObjectType {
             AnotherObject(someObject: component())
         }
-        
+
         func component() -> ViewModelObjectType {
             SomeViewModel(
                 someObject: component(),
                 anotherObject: component()
             )
         }
-        
+
         func component() -> ViewControllerObjectType {
             SomeViewController()
         }
-        
+
         func test() -> String {
             "SampleModule.test()\(value ?? "")"
         }
@@ -150,11 +153,11 @@ extension DependencyTests {
 
     struct AnotherObject: AnotherObjectType {
         private let someObject: SomeObjectType
-        
+
         init(someObject: SomeObjectType) {
             self.someObject = someObject
         }
-        
+
         func testXyz() -> String {
             "AnotherObject.testXyz|" + someObject.testAbc()
         }
@@ -163,16 +166,16 @@ extension DependencyTests {
     struct SomeViewModel: ViewModelObjectType {
         private let someObject: SomeObjectType
         private let anotherObject: AnotherObjectType
-        
+
         init(someObject: SomeObjectType, anotherObject: AnotherObjectType) {
             self.someObject = someObject
             self.anotherObject = anotherObject
         }
-        
+
         func testLmn() -> String {
             "SomeViewModel.testLmn|" + someObject.testAbc()
         }
-        
+
         func testLmnNested() -> String {
             "SomeViewModel.testLmnNested|" + anotherObject.testXyz()
         }
@@ -180,14 +183,14 @@ extension DependencyTests {
 
     class SomeViewController: ViewControllerObjectType {
         @Inject private var module: SampleModuleType
-        
+
         private lazy var someObject: SomeObjectType = module.component()
         private lazy var anotherObject: AnotherObjectType = module.component()
-        
+
         func testRst() -> String {
             "SomeViewController.testRst|" + someObject.testAbc()
         }
-        
+
         func testRstNested() -> String {
             "SomeViewController.testRstNested|" + anotherObject.testXyz()
         }
@@ -196,12 +199,12 @@ extension DependencyTests {
     struct WidgetWorker: WidgetWorkerType {
         private let store: WidgetStore
         private let remote: WidgetRemote
-        
+
         init(store: WidgetStore, remote: WidgetRemote) {
             self.store = store
             self.remote = remote
         }
-        
+
         func fetch(id: Int) -> String {
             store.fetch(id: id)
                 + remote.fetch(id: id)
@@ -210,33 +213,33 @@ extension DependencyTests {
 
     struct WidgetNetworkRemote: WidgetRemote {
         private let httpService: HTTPServiceType
-        
+
         init(httpService: HTTPServiceType) {
             self.httpService = httpService
         }
-        
+
         func fetch(id: Int) -> String {
             "|MediaNetworkRemote.\(id)|"
         }
     }
 
     struct WidgetRealmStore: WidgetStore {
-        
+
         func fetch(id: Int) -> String {
             "|MediaRealmStore.\(id)|"
         }
-        
+
         func createOrUpdate(_ request: String) -> String {
             "MediaRealmStore.createOrUpdate\(request)"
         }
     }
 
     struct HTTPService: HTTPServiceType {
-        
+
         func get(url: String) -> String {
             "HTTPService.get"
         }
-        
+
         func post(url: String) -> String {
             "HTTPService.post"
         }
