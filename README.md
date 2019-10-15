@@ -49,7 +49,7 @@ pod 'Biodag', '~> 0.1.0'
 You can also use SPM. Add a dependency for Biodag like:
 
 ```
-.package(url: "https://github.com/kerrmarin/biodag.git", from: "0.1.0"),
+.package(url: "https://github.com/kerrmarin/biodag.git", from: "0.1.0")
 ```
 
 # Contributing
