@@ -6,10 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Biodag",
     platforms: [
-        .macOS(.v10_12),
-        .iOS(.v10),
-        .tvOS(.v10),
-        .watchOS(.v3)
+        .iOS(.v13),
     ],
     products: [
         .library(
