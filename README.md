@@ -34,3 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 ```
 
 If you forget to `build` the dependency container, it will result in a run-time exception. 
+
+# Contributing
+
+To run the tests, run `swift test`.
+
+To open in Xcode, open the package workspace file inside the `.swiftpm/xcode` folder.
+
+If you find a bug or want to suggest an improvement, open an issue and, optionally (but encouraged!), make a PR :)
