@@ -38,6 +38,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 If you forget to `build` the dependency container, it will result in a run-time exception. 
 
+# Installation
+
+The easiest way to install this is via CocoaPods:
+
+```
+pod 'Biodag', '~> 0.1.0'
+```
+
+You can also use SPM. Add a dependency for Biodag like:
+
+```
+.package(url: "https://github.com/kerrmarin/biodag.git", from: "0.1.0"),
+```
+
 # Contributing
 
 To run the tests, run `swift test`.
