@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name          = 'Biodag'
-    spec.version       = '0.1.0'
+    spec.version       = '0.2.0'
     spec.license       = { :type => 'MIT', :file => 'LICENSE' }
     spec.homepage      = 'https://github.com/kerrmarin/biodag'
     spec.authors       = { 'Kerr Marin Miller' => 'kerr@kerrmarin.com' }
