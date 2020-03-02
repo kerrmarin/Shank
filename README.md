@@ -22,7 +22,7 @@ Register modules early in your app:
 ```swift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private let dependencies = Dependencies {
+    private let dependencies = DependencyResolver {
         // A prototype dependency (i.e. one per @Inject)
         Module { WidgetModule() as WidgetModuleType }
         // A dependency that's scoped to be a singleton
