@@ -2,7 +2,7 @@
 
 Biodag: [pit̪akˈ] - [dirk](https://en.wikipedia.org/wiki/Dirk) in Scottish Gaelic, a long thrusting dagger.
 
-A Swift micro-library that provides lightweight dependency injection, heavily influenced by [Shank](https://github.com/ZamzamInc/Shank)
+A Swift micro-library that provides lightweight dependency injection, originally forked from [Shank](https://github.com/ZamzamInc/Shank)
 
 Inject dependencies via property wrappers:
 ```swift
@@ -43,13 +43,13 @@ If you forget to `build` the dependency container, it will result in a run-time 
 The easiest way to install this is via CocoaPods:
 
 ```
-pod 'Biodag', '~> 0.2.0'
+pod 'Biodag', '~> 0.3.0'
 ```
 
 You can also use SPM. Add a dependency for Biodag like:
 
 ```
-.package(url: "https://github.com/kerrmarin/biodag.git", from: "0.2.0")
+.package(url: "https://github.com/kerrmarin/biodag.git", from: "0.3.0")
 ```
 
 # Contributing

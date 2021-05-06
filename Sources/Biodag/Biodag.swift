@@ -92,7 +92,7 @@ private extension DependencyResolver {
 public extension DependencyResolver {
 
     /// DSL for declaring modules within the container dependency initializer.
-    @_functionBuilder struct ModuleBuilder {
+    @resultBuilder struct ModuleBuilder {
         public static func buildBlock(_ modules: Module...) -> [Module] { modules }
         public static func buildBlock(_ module: Module) -> Module { module }
     }
