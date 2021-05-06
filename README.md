@@ -1,4 +1,4 @@
-# Biodag [![Build Status](https://travis-ci.org/kerrmarin/biodag.svg?branch=develop)](https://travis-ci.org/kerrmarin/biodag)
+# Biodag
 
 Biodag: [pit̪akˈ] - [dirk](https://en.wikipedia.org/wiki/Dirk) in Scottish Gaelic, a long thrusting dagger.
 
