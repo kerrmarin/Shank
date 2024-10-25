@@ -12,10 +12,10 @@ jobs:
     # Set timeout to prevent overcharging
     timeout-minutes: 20
     steps:
-      - uses: maxim-lobanov/setup-xcode@v1.2.3
+      - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: 12.4
+          xcode-version: latest
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Test
         run: swift test --parallel
