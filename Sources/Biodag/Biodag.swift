@@ -15,36 +15,40 @@ import Foundation
 
 /// A dependency collection that provides resolutions for object instances.
 final public class DependencyResolver {
+    private let moduleArray: [Module]
     /// Stored object instance factories.
     private var modules = [String: Module]()
     private var instances = [String: Any]()
 
     /// Construct dependency resolutions.
     public init(@ModuleBuilder _ modules: () -> [Module]) {
-        modules().forEach { add(module: $0) }
+        self.moduleArray = modules()
     }
 
     /// Construct dependency resolution.
     public init(@ModuleBuilder _ module: () -> Module) {
-        add(module: module())
+        self.moduleArray = [module()]
     }
 
     /// Assigns the current container to the composition root.
     public func build() {
-        Self.root = self
+        for module in moduleArray {
+            Self.root.add(module: module)
+        }
     }
 
-    fileprivate init() {}
-    deinit { modules.removeAll() }
+    fileprivate init() {
+        self.moduleArray = []
+    }
 }
 
 private extension DependencyResolver {
     /// Composition root container of dependencies.
-    static var root = DependencyResolver()
+    static let root = DependencyResolver()
 
     /// Registers a specific type and its instantiating factory.
     func add(module: Module) {
-        modules[module.name] = module
+        self.modules[module.name] = module
     }
 
     /// Resolves through inference and returns an instance of the given type from the current default container.
