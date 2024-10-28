@@ -82,6 +82,24 @@ extension DependencyTests {
         // The singletons are the same instance
         XCTAssertTrue(singletonModule === helperSingleton)
     }
+
+    func testAddingDependencies() {
+        struct Added { }
+        struct NotAdded { }
+
+        let newResolver = DependencyResolver({
+            Module { Added() as Added }
+        })
+        newResolver.build()
+
+
+        @Inject var widgetModule: WidgetModuleType
+        @Inject var added: Added
+        @Inject var notAdded: NotAdded
+
+        XCTAssertNotNil(widgetModule)
+        XCTAssertNotNil(added)
+    }
 }
 
 // MARK: - Subtypes
