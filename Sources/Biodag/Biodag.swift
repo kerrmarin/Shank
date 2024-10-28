@@ -96,17 +96,10 @@ private extension DependencyResolver {
 public extension DependencyResolver {
 
     /// DSL for declaring modules within the container dependency initializer.
-    #if swift(>=5.4)
     @resultBuilder struct ModuleBuilder {
         public static func buildBlock(_ modules: Module...) -> [Module] { modules }
         public static func buildBlock(_ module: Module) -> Module { module }
     }
-    #else
-    @_functionBuilder struct ModuleBuilder {
-        public static func buildBlock(_ modules: Module...) -> [Module] { modules }
-        public static func buildBlock(_ module: Module) -> Module { module }
-    }
-    #endif
 }
 
 /// A type that contributes to the object graph.
